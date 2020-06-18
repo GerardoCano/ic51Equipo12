@@ -3,9 +3,62 @@
 <head>
    <title>Calcular área de triángulo</title>
    <meta charset="utf-8">
+   <script>
+      /* invoca a registraServiceWorker instalar la aplicación en el caché del
+       * navegador. No se espera a que termine el registro. */
+      registraServiceWorker();
+      /** Registra un service worker para instalar la aplicación en el
+       * caché del navegador. La palabra reservada async indica que no espera
+       * a que termine y libera el registro de activación que lo llamó. */
+      async function registraServiceWorker() {
+        if ("serviceWorker" in navigator) {
+          try {
+            /* Registra el service worker y espera que termine. El service
+             * worker debe estar en la carpeta public. La palabra await indica
+             * que espera a que termine y solo puede usarse en una función
+             * async. */
+            const registro = await navigator.serviceWorker.register("sw.js");
+            // Registro correcto y se muestra en la consola.
+            console.log("Service Worker registrado.");
+            console.log(registro);
+          } catch (e) {
+            // Hubo un error en el registro.
+            muestraError(e);
+          }
+        }
+      }
+      /** Procesa una excepción y muestra un mensaje de error.
+       * @param {Error} e descripción del error. */
+      function muestraError(e) {
+        console.log(e);
+        alert(e.message);
+      }
+    </script>
+
+    <!-- Ícono para la página web. Debe ponerse en la raíz de la página. -->
+    <link rel="icon" sizes="32x32" href="favicon.ico">
+
+    <!-- Color de la barra de navegación de Chrome en dispositivos móviles. -->
+    <meta name="theme-color" content="#446689">
+
+    <!-- Configuración de la PWA: Chrome y Edge. -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Configuración para Web Clip en Safari. -->
+    <meta name="apple-mobile-web-app-title" content="dmppwa">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="img/icono-2048.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="img/icono-256.png">
+    <link rel="apple-touch-icon" sizes="1024x1024" href="img/icono-1024.png">
+    <link rel="apple-touch-icon" sizes="2048x2048" href="img/icono-2048.png">
+   
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+   <script type="module" src="cmp/mi-footer.js"></script>
+   <link rel="stylesheet" href="css/estilo.css">
+
    <!-- update the version number as needed -->
    <script defer src="/__/firebase/7.15.1/firebase-app.js"></script>
    <!-- include only the Firebase features as you need -->
@@ -15,7 +68,7 @@
    <script defer src="/__/firebase/7.15.1/firebase-storage.js"></script>
    <!-- initialize the SDK after all desired features are loaded -->
    <script defer src="/__/firebase/init.js"></script>
-   <link rel="stylesheet" href="estilos/estilo.css">
+   
 </head>
    <body>
       <form class="col s12" action="javascript:calcular();">
@@ -33,20 +86,23 @@
             <label for="altura"><b>Ingrese la altura</b></label>
          </div>   
       </form>
+      <mi-footer></mi-footer>
       <script>
-         $(document).ready(function() {
-            Materialize.updateTextFields();
-         });
-
          function calcular() {
          const Area= (base.valueAsNumber*altura.valueAsNumber)/2;
-         const respuesta= `el area del triangulo es: ${Area}`;
+         const respuesta= `El área del triángulo es: ${Area}`;
          alert(respuesta); 
          }
       </script>
-   </main>
-   <footer>
-      <b>Grupo IC-51M Equipo 12</b>
-   </footer>
+      <script>
+         try {
+           let app = firebase.app();
+           let apis = ["auth", "firestore", "storage"]
+             .filter(api => typeof app[api] === "function");
+           mensaje.value = `Firebase SDK cargó con: ${apis.join(', ')}`;
+         } catch (e) {
+           muestraError(e);
+         }
+       </script>
  </body>
 </html>

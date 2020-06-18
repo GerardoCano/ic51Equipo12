@@ -71,18 +71,18 @@
    
 </head>
    <body>
-      <form class="col s12" action="javascript:calcularArea();">
+      <form action="javascript:calcularArea();">
          <header>
             <h1 class="head">Área de un triángulo</h1>
             <button><span class="material-icons md-light">send</span></button>
          </header>
          <div class="campo">
-            <input id="base" class="id" type="number" pattern="[0-9]" title="Solo números" autocomplete="off" required>
+            <input id="base" id=base type=number pattern="[0-9]" title="Solo números" autocomplete="off" required>
             <label for="base"><b>Ingrese la base</b></label>
          </div>
          
          <div class="campo">
-            <input id="altura" class="id" type="number" pattern="[0-9]" title="Solo números" autocomplete="off" required>
+            <input id="altura" id=altura type=number pattern="[1-9]" title="Solo números" autocomplete="off" required>
             <label for="altura"><b>Ingrese la altura</b></label>
          </div> 
          <div class="campo">
@@ -92,10 +92,22 @@
       <mi-footer></mi-footer>
       <script>
          function calcularArea() {
-            const base = base.valueAsNumber;
-            const altura = altura.valueAsNumber;
-            const area = (base*altura)/2;
-            outResultado.value = 'Area: ' + area;
+            try {
+               const a = base.valueAsNumber;
+               const b = altura.valueAsNumber;
+               valida(a > 0, "valor de base incorrecta.");
+               valida(b > 0, "Valor de altura incorrecta.");
+               const resultado = ((a * b)/2);
+               outResultado.value = 'Área: ' + resultado;
+            } catch (e) {
+               console.log(e);
+               alert(e.message);
+            }
+         }
+         function valida(cond, mensaje) {
+            if (!cond) {
+               throw new Error(mensaje);
+            }
          }
       </script>
  </body>

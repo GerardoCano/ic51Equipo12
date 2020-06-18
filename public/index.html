@@ -3,7 +3,8 @@
 <head>
    <title>Calcular área de triángulo</title>
    <meta charset="utf-8">
-   <script>
+
+      <script>
       /* invoca a registraServiceWorker instalar la aplicación en el caché del
        * navegador. No se espera a que termine el registro. */
       registraServiceWorker();
@@ -52,7 +53,6 @@
     <link rel="apple-touch-icon" sizes="256x256" href="img/icono-256.png">
     <link rel="apple-touch-icon" sizes="1024x1024" href="img/icono-1024.png">
     <link rel="apple-touch-icon" sizes="2048x2048" href="img/icono-2048.png">
-   
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
    
 </head>
    <body>
-      <form class="col s12" action="javascript:calcular();">
+      <form class="col s12" action="javascript:calcularArea();">
          <header>
             <h1 class="head">Área de un triángulo</h1>
             <button><span class="material-icons md-light">send</span></button>
@@ -84,25 +84,19 @@
          <div class="campo">
             <input id="altura" class="id" type="number" pattern="[0-9]" title="Solo números" autocomplete="off" required>
             <label for="altura"><b>Ingrese la altura</b></label>
-         </div>   
+         </div> 
+         <div class="campo">
+            <output id=outResultado></output></p> 
+         </div>
       </form>
       <mi-footer></mi-footer>
       <script>
-         function calcular() {
-         const Area= (base.valueAsNumber*altura.valueAsNumber)/2;
-         const respuesta= `El área del triángulo es: ${Area}`;
-         alert(respuesta); 
+         function calcularArea() {
+            const base = base.valueAsNumber;
+            const altura = altura.valueAsNumber;
+            const area = (base*altura)/2;
+            outResultado.value = 'Area: ' + area;
          }
       </script>
-      <script>
-         try {
-           let app = firebase.app();
-           let apis = ["auth", "firestore", "storage"]
-             .filter(api => typeof app[api] === "function");
-           mensaje.value = `Firebase SDK cargó con: ${apis.join(', ')}`;
-         } catch (e) {
-           muestraError(e);
-         }
-       </script>
  </body>
 </html>
